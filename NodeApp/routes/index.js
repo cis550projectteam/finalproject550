@@ -6,10 +6,10 @@ var path = require('path');
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-  host: 'fling.seas.upenn.edu',
-  user: 'yaoshuai',
-  password: 'c0901*ShErRy',
-  database: 'yaoshuai'
+  host: 'cis550.cwmlqizm5y8w.us-east-2.rds.amazonaws.com',
+  user: 'cis550m',
+  password: '12345678',
+  database: 'cis550m'
 });
 
 connection.connect(function(err) {
@@ -29,21 +29,18 @@ router.get('/dashboard', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'dashboard.html'));
 });
 
-router.get('/reference', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'reference.html'));
+router.get('/register', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'register.html'));
 });
 
-router.get('/recommendations', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'recommendations.html'));
+router.get('/crimeVisualize', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'crimeVisualize.html'));
 });
 
-router.get('/bestof', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'bestof.html'));
+router.get('/googleMap', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'googleMap.html'));
 });
 
-router.get('/Posters', function(req, res) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'Posters.html'));
-});
 
 // To add a new page, use the templete below
 /*
@@ -59,7 +56,7 @@ router.post('/login', function(req, res) {
   // req.body contains the json data sent from the loginController
   // e.g. to get username, use req.body.username
 
-  var query = "REPLACE INTO User (username,password) VALUES (" + "'" + req.body.username + "'" + ", " + "'" + req.body.password + "')"; /* Write your query here and uncomment line 21 in javascripts/app.js*/
+  var query = "REPLACE INTO User (username,pword) VALUES (" + "'" + req.body.username + "'" + ", " + "'" + req.body.password + "')"; /* Write your query here and uncomment line 21 in javascripts/app.js*/
   //;
   connection.query(query, function(err, rows, fields) {
     console.log("rows", rows);

@@ -1,60 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
+<html ng-app = 'angularjsNodejsTutorial' lang = 'en'>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CIS550 HW2: </title>
+    <title>Recommendations</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="javascripts/app.js" type="text/javascript"></script>
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common.css" rel="stylesheet">
-    <!-- Include your custom css file here if you're making one -->
-  </head>
+    <!-- <link href="/stylesheets/dashboard.css" rel="stylesheet"> -->
+</head>
 
-  <body>
-    <!-- <body onload="fetchRandomMovies()">-->
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <span class="navbar-brand center">CIS550 HW2</span>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
-          <a class="nav-item nav-link" href="/reference">Reference</a>
-          <a class="nav-item nav-link" href="/recommendations">Recommendations</a>
-          <a class="nav-item nav-link" href="/bestof">Best Of</a>
-          <a class="nav-item nav-link active" href="/Posters">Posters</a>
+          <a class="nav-item nav-link active" href="/dashboard">Dashboard</a>
+          <a class="nav-item nav-link" href="/crimeVisualize">Crime visualization</a>
+          <a class="nav-item nav-link" href="/googleMap">Google Map</a>
         </div>
       </div>
-    </nav>
+  </nav>
 
-    <div ng-app = 'angularjsNodejsTutorial' class="container user-container" ng-controller = "postersController">
-      <div class="jumbotron">
-        <div class="h5">Posters</div>
-        <!-- Do something here -->
-
-        <table>
-            <tr><th>poster and movie website</th>
-            <tr ng-repeat="x in randomMovies">
-            <th>
-                <a ng-href="{{x.Website}}">
-                  <img border="0" ng-src="{{x.Poster}}" />
-                </a>
-                <p>{{x.Title}}</p>
-            </th>
-            </tr>
-        </table>
-
+    <div class="container user-container" ng-controller = "recommendationsController">
+        <div class="jumbotron">
+      <input type="text" class="input movieID" placeholder="movieID" id="inputMovieID"/> 
+      <!-- // id="inputMovieID" -->
+      <button class="button" name="recommendations" ng-click="getRecommendedMovies()">Submit</button>
+      <table>
+          <th>Movie Recommendation (only achieve printing the movie's genres)</th>
+          <tr ng-repeat="topMovie in thisMovieGenres">
+          <td>{{topMovie.genre}}</td>
+          </tr>
+      </table>
+      <div style="position: fixed;bottom:15px;right:15px;">
+        <button onclick="location.href='/dashboard'" type="button">Go Back to Dashboard</button>
+      </div>
       </div>
     </div>
-
+    
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  </body>
+</body>
 
 </html>

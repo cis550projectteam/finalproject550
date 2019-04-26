@@ -2,7 +2,7 @@
 <html ng-app="angularjsNodejsTutorial">
 
   <head>
-    <title>CIS550 HW2: Login</title>
+    <title>CIS550 Project: Login</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
     <script src="javascripts/app.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -12,11 +12,12 @@
   </head>
 
   <body>
-    <div class="heading">CIS550 HW2</div>
+    <div class="heading">Find your dream house!</div>
     <div class="container login-container" ng-controller="loginController">
       <input type="text" class="input username" placeholder="Username" ng-model="username" />
       <input type="password" class="input password" placeholder="Password" ng-model="password" />
       <button type="button" class="login-button" name="Login" ng-click="verifyLogin()">Login</button>
+      <input type="button" class="login-button" name="register" value ="Register" onclick="window.location.href='/register'"/>
     </div>
 
     <!-- Include these before the end of body tag in every HTML file -->

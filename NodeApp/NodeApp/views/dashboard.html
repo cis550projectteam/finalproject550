@@ -10,8 +10,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="javascripts/app.js" type="text/javascript"></script>
     <!-- Custom styles for this template-->
-    <link href="/stylesheets/common.css" rel="stylesheet">
+    <link href="/stylesheets/common_new.css" rel="stylesheet">
     <link href="/stylesheets/dashboard.css" rel="stylesheet">
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }  
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }     
+        tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
   </head>
 
   <body>
@@ -84,29 +95,113 @@
           <option value="WY">Wyoming</option>
           <option value = "DC">District of Columbia</option>
        </select>
-       City <input type="text" class="input City" placeholder="Input a city please" id="inputCity"/> 
+       City <input type="text" class="input" placeholder="Input a city please" id="inputCity"/> 
        <select id="buy_or_rent">
         <option disabled selected value> -- BUY or RENT -- </option>
         <option value="BUY">BUY</option>
         <option value="RENT">RENT</option>
        </select>
        <!-- <button class="button" name="best_of" ng-click="getBestOf()">Submit</button> -->
-       <button class="button" ng-click="getInfo()">Search Dream House</button>
+       <button class="search" ng-click="getInfo()">Search</button>
         <!-- Display the results -->
-        <table ng-if=statesInfo>
+        <table class='table' ng-if=statesInfo>
+          <caption align="top" class="input">Explore the Neighborhood</caption>
           <tr>
           <th>Zipcode</th>
           <th>Recent Price/Rent</th>
+          <th>Population</th>
           </tr>
           <tr ng-repeat="result in statesInfo">
-          <th><input type="button" value={{result.RegionName}} class="btn"/></th><th>{{result.RecentPrice}}</th>
-          
+          <th><button class="btn" ng-click="getService(result)">{{result.RegionName}}</button></th><th>{{result.RecentPrice}}</th><th>{{result.population}}</th> 
           </tr>
         </table>
 
+      </table>
+      <table ng-if=service border="1">
+          <tr>
+            <th>Category</th>
+            <th>Name</th>
+            <th>Ratings</th>
+            <th>Address</th>
+          </tr>
+          <tr ng-repeat="y in service">
+          <th>{{y.category}}</th> <th>{{y.service_name}}</th> <th>{{y.stars}}</th><th>{{y.address}}</th>       
+          </tr>
+      </table>
+<!-- ############################################################### -->
+        <canvas id="can1" width="800" height="600"></canvas>
+	<script type="text/javascript">
+			var can1 = document.getElementById("can1");
+			var ctx = can1.getContext("2d");
+			nums = [statesInfo[0].RecentPrice,1236,1273,1545,1988];
+			datas = ["11.1-11.2","11.3-11.9","11.10-11.16","11.17-11.23","11.24-11.30"];
+			//画出坐标线
+			function drawBorder(){
+				ctx.beginPath();
+				ctx.moveTo(100,50);
+				ctx.lineTo(100,550);
+				ctx.moveTo(100,550);
+				ctx.lineTo(600,550);
+				ctx.closePath();
+				ctx.stroke();
+			}
+			//画出折线
+			function drawLine(){
+				for (i = 0;i < nums.length-1;i ++){
+					//起始坐标
+					var numsY = 550-nums[i]/500*100;
+					var numsX = i*100+150;
+					//终止坐标
+					var numsNY = 550-nums[i+1]/500*100;
+					var numsNX = (i+1)*100+150;
+					ctx.beginPath();
+					ctx.moveTo(numsX,numsY);
+					ctx.lineTo(numsNX,numsNY);
+					ctx.lineWidth = 6;
+					ctx.strokeStyle = "#80aa33";
+					ctx.closePath();
+					ctx.stroke();
+				}
+			}
+			//绘制折线点的菱形和数值，横坐标值，纵坐标值
+			function drawBlock(){
+				for (i = 0;i <= nums.length;i ++){
+					var numsY = 550-nums[i]/500*100;
+					var numsX = i*100+150;
+					ctx.beginPath();
+					// 画出折线上的方块
+					ctx.moveTo(numsX-4,numsY);
+					ctx.lineTo(numsX,numsY-4);
+					ctx.lineTo(numsX+4,numsY);
+					ctx.lineTo(numsX,numsY+4);
+					ctx.fill();
+					ctx.font = "15px scans-serif";
+					ctx.fillStyle = "black";
+					//折线上的点值
+					var text = ctx.measureText(nums[i]);
+					ctx.fillText(nums[i],numsX-text.width,numsY-10);
+					//绘制纵坐标
+					var colText = ctx.measureText((nums.length-i)*500);
+					ctx.fillText((nums.length-i)*500,90-colText.width,i*100+55);
+					//绘制横坐标并判断
+					if (i < 5){
+						var rowText = ctx.measureText(datas[i]);
+						ctx.fillText(datas[i],numsX-rowText.width/2,570);
+					}else if(i == 5) {
+						return;
+					}
+					ctx.closePath();
+					ctx.stroke();
+				}
+			}
+			drawBorder();
+			drawLine();
+			drawBlock();
+	</script>
+
       </div>
     </div> 
-<!-- <td><input type="button" value="test" class="btn"/></td> -->
+<!-- ############################################################### -->
      
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

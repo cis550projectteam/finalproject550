@@ -1,0 +1,388 @@
+/* body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: url('./../assets/bg.jpg') center center no-repeat fixed;
+  height: 100vh;
+  width: 100vw;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nav-container {
+  margin: 20px auto;
+}
+
+.jumbotron {
+  background-color: #f3f4f7; background-color:#FFCCE6; 
+  padding: 2rem;
+} */
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: url(https://videos.zillowstatic.com/homepage/video_buy_santa_20161021_q.jpg) center center no-repeat fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: 1450px 625px;
+  width: 100%;
+  /* height: 800px;*/
+  opacity: 1.5;
+}
+
+.op {
+  opacity: .7;
+}
+
+#h {
+  display: inline important;
+  font-family: Verdana;
+  text-align: center;
+  display: block;
+  color: black;
+  padding-top: 25px;
+  padding-left: -10px;
+  border: none;
+}
+
+ody {
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  float: left;
+}
+/* ~~ Top Navigation Bar ~~ */
+
+#navigation-container {
+  width: 100%;
+  /*1200px*/
+  margin: 0 auto;
+  height: 70px;
+}
+
+.navigation-bar {
+  background-color: #ffffff;
+  color: rgb(39, 33, 33);
+  height: 40px;
+  width: 100%;
+  margin: -10px;
+}
+
+#navigation-container img {
+  float: left;
+  margin: 0;
+  margin-left: 20px;
+  margin-bottom: -50px;
+  width: 100;
+  height: 100;
+  font-size: 25px;
+}
+
+#navigation-container ul {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#navigation-container li {
+  list-style-type: none;
+  padding: 6px;
+  margin: -6px;
+  /*height: -5px; 
+  margin-top: 1px;
+  margin-bottom: -5px;*/
+  display: inline;
+}
+
+.btn {
+  background: rgb(10, 10, 10);
+  opacity: 0.7;
+  border-color: white;
+  color: white;
+  font-size: 25px;
+  padding: 0px;
+  width: 150px;
+  height: 50px;
+}
+
+h3 {
+  font-family: Nunito;
+  color: white;
+  margin-right: 10cm;
+  margin-left: 1cm;
+  margin-top: 4px;
+}
+
+button:hover {
+  background-color: rgb(13, 121, 245);
+}
+
+#r {
+  color: blue !important;
+}
+
+#r:hover {
+  color: black !important;
+}
+
+li:hover {
+  color: rgb(25, 9, 247);
+}
+
+a:hover {
+  color: rgb(13, 121, 245);
+}
+
+#navigation-container li {
+  color: rgb(12, 12, 12);
+  font-size: 15px;
+  font-family: Nunito;
+  text-decoration: none;
+  line-height: 10px;
+  padding: 10px;
+  opacity: 1;
+}
+
+li a:hover {
+  color: blue;
+}
+
+.button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  text-align: center;
+}
+
+.center-text {
+  font-family: Montserrat;
+  font-size: 25px;
+  color: rgb(250, 250, 250);
+  text-align: center;
+  margin: 5%;
+}
+
+.blue-box {
+  padding: 10px;
+  background-color: rgb(29, 20, 75);
+  opacity: .9;
+  display: inline-flex;
+  width: 100%;
+  height: 1.5cm;
+  margin-left: -8px;
+  margin-right: 1cm;
+  margin-top: 13%;
+}
+
+.button1 {
+  color: rgb(255, 255, 255);
+  width: auto;
+  height: auto;
+  border: none;
+  background: blue;
+  font-family: Nunito;
+}
+
+.logo1 {
+  width: 2.2cm;
+  height: 1.2cm;
+  margin: 0px;
+  margin-right: 2cm;
+  margin-top: -7px;
+  position: left;
+  display: inline-block;
+}
+
+.wbox {
+  height: auto;
+  position: relative;
+  width: 100%;
+  background-color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+/* Create four equal columns that floats next to each other */
+
+h4 {
+  text-align: left;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  margin-left: 420px;
+  margin-top: 7cm;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+.form-wrapper {
+  list-style-type: none;
+  width: 595px;
+  height: 55px;
+  margin-top: 7.5cm;
+  margin-left: 320px;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 0;
+  border: none;
+  padding-bottom: 5px;
+}
+
+.search {
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 110px;
+  font-family: Verdana;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  background-color: #286fe2;
+  color: white;
+  cursor: pointer;
+}
+
+.input {
+  height: 60px;
+  width: 440px;
+  padding-right: 32px;
+  border: none;
+  font-size: 18px;
+  border: none;
+}
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+  height: 210px;
+  text-align: left;
+  font-family: Nunito;
+  /* Should be removed. Only for demonstration */
+}
+/* Clear floats after the columns */
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  text-align: center;
+}
+
+a {
+  font-family: Verdana;
+  display: inline;
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+a:hover {
+  color: blue;
+}
+
+.a1 {
+  color: rgb(74, 10, 248);
+}
+
+#menu {
+  background-color: black;
+  margin: -15px;
+}
+
+.h3f {
+  font-family: Montserrat;
+  color: white;
+  text-align: center;
+  display: inline-block;
+}
+
+h6 {
+  text-align: center;
+  color: rgb(241, 135, 15);
+}
+
+.line {
+  background-color: #999;
+  height: 1px;
+  width: auto;
+}
+
+#menu ul {
+  list-style: none;
+  text-align: center;
+  border: none;
+  background-color: black;
+  color: #ffffff;
+}
+
+#menu a {
+  display: inline-block;
+  text-align: center;
+  border: none;
+  color: #ffffff;
+}
+
+#menu li {
+  display: inline-block;
+  text-align: center;
+  border: none;
+  color: #ffffff;
+}
+
+#menu a:hover {
+  color: blue;
+}
+
+.fa {
+  padding: 10px;
+  font-size: 15px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 3px 3px;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}

@@ -112,6 +112,18 @@ router.post('/register', function(req, res) {
   });
 });
 
+//get the surrounding services of a zipcode
+router.get('/getService/:input', function(req, res) {
+  console.log(req.params.input);
+  var zipcode=parseInt(req.params.input);
+  var query = "select * from service where postal_code >="+ zipcode+"-5 AND "+"postal_code <="+ zipcode+"+5 order by stars DESC limit 15";
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log('query movie genres error',err);
+    else {
+      res.json(rows);
+    }
+  });
+});
 // //display the filtered result
 // router.get('/userPreference/:inputState', function(req, res) {
 //   var input = req.params.inputState;

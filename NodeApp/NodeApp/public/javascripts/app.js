@@ -65,26 +65,45 @@ app.controller('registerController', function($scope, $http) {
 
 //dashboard controller 
 app.controller('userController', function($scope, $http) {    
-    $scope.getInfo = function(){
-      var selections = document.getElementById('selected_state');
-      var city = document.getElementById("inputCity").value;
-      var state = selections.options[selections.selectedIndex].text;
-      var bor = document.getElementById("buy_or_rent").value;
-      
-      var request = $http.get('/userPreference/' + state + '/' + city + '/' + bor); 
-
-      // var request = $http.get('/userPreference')
-    request.success(function(response) {
-      // success
-      $scope.statesInfo = response;
-      // console.log("$scope.userInfo",$scope.userInfo);
-    });
+  $scope.getInfo = function(){
+    var selections = document.getElementById('selected_state');
+    var city = document.getElementById("inputCity").value;
+    var state = selections.options[selections.selectedIndex].text;
+    var bor = document.getElementById("buy_or_rent").value;
     
-    request.error(function(response) {
-      // failed
-      console.log('err');
-    });
-    };
+    var request = $http.get('/userPreference/' + state + '/' + city + '/' + bor); 
+
+    // var request = $http.get('/userPreference')
+  request.success(function(response) {
+    // success
+    $scope.statesInfo = response;
+    // console.log("$scope.userInfo",$scope.userInfo);
+  });
+  
+  request.error(function(response) {
+    // failed
+    console.log('err');
+  });
+  };
+
+$scope.getService = function(input){
+  
+  var request = $http.get('/getService/'+input.RegionName );
+
+    // var request = $http.get('/userPreference')
+  request.success(function(response) {
+    // success
+    $scope.service = response;
+    console.log("$scope.userInfo",$scope.userInfo);
+  });
+  
+  request.error(function(response) {
+    // failed
+    console.log('err');
+  });
+  };
+
+  
 });
 
 

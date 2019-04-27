@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CIS550 HW2: </title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="javascripts/app.js" type="text/javascript"></script>
+    <!-- Custom styles for this template-->
+    <link href="/stylesheets/common.css" rel="stylesheet">
+    <!-- Include your custom css file here if you're making one -->
+    <style>  
+        #divContainer{  
+            margin-top: 20px;  
+            text-align: center;  
+        }  
+        #cv{  
+            width: 300px;  
+            height: 200px;  
+            border-bottom: 2px solid #000;  
+            border-left: 2px solid #000;  
+        }  
+    </style> 
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <span class="navbar-brand center">CIS550 HW2</span>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
+          <a class="nav-item nav-link" href="/reference">Reference</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="divContainer">  
+        Average Median Price Trend (Per Square Feet)<br/>  
+        <canvas id="cv">Your device doesn't support table display</canvas>  
+    </div>  
+
+    <script>  
+        (function(){  
+            window.onload = function(){  
+
+                //数据源  
+                var dict = [  
+                    {x: "2014", y: 13400},  
+                    {x: "2015", y: 13380},  
+                    {x: "2016", y: 13370},  
+                    {x: "2017", y: 13370},  
+                    {x: "2018", y: 13380}  
+                ]  
+
+                //数据源提取  
+                var len = dict.length;  
+                var xArr = [], yArr = [], tmp_yArr = [];  
+                for(var i=0; i<len; i++){  
+                    xArr.push(i * 60);  
+                    tmp_yArr.push(dict[i].y);  
+                }  
+                var tmp_minY = Math.min.apply(Math, tmp_yArr);//最小值  
+                var tmp_maxY = Math.max.apply(Math, tmp_yArr);//最大值  
+                if(tmp_maxY - tmp_minY <= 100){  
+                    for(var i=0; i<len; i++){  
+                        yArr.push(tmp_yArr[i] - tmp_minY + 50);//与最小的做比较  
+                    }  
+                }  
+                else{//如果相差太大会导致图表不美观  
+                    for(var i=0; i<len; i++){  
+                        yArr.push(tmp_yArr[i] / 500);  
+                    }  
+                }  
+                var minY = Math.min.apply(Math, yArr);  
+                var maxY = Math.max.apply(Math, yArr);  
+
+                //canvas 准备  
+                var canvas = document.getElementById("cv");//获取canvas画布  
+                var ctx  = canvas.getContext("2d");  
+
+                //画折线  
+                for(var i=0 ;i<len; i++){  
+                    var x = xArr[i];  
+                    var y = maxY - yArr[i] + minY;  
+                    if(i === 0){  
+                        ctx .moveTo(x, y);  
+                    }  
+                    else{  
+                        ctx .lineTo(x, y);  
+                    }  
+                }  
+                ctx .stroke();  
+
+                //画点  
+                for(var i=0; i<len; i++){  
+                    var x = xArr[i];  
+                    var y = maxY - yArr[i] + minY;  
+                    var xMemo = dict[i].x;  
+                    var yMemo = "$" + dict[i].y;  
+                    ctx.beginPath();  
+                    ctx.fillStyle = "#000";  
+                    ctx.arc(x, y, 2, 0, 2*Math.PI);//画点  
+                    ctx.fill();  
+                    ctx.fillText(yMemo, x + 3, y - 10);  
+                    ctx.fillText(xMemo, x + 3, canvas.height - 10, 40);//画文字  
+                }  
+
+            }  
+        })();  
+    </script> 
+
+    <!-- Include these before the end of body tag in every HTML file -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+
+</html>

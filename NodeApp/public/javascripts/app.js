@@ -31,6 +31,38 @@ app.controller('loginController', function($scope, $http) {
   };
 });
 
+app.controller('registerController', function($scope, $http) {
+  $scope.verifyRegister = function() {
+    // To check in the console if the variables are correctly storing the input:
+    // console.log($scope.username, $scope.password);
+
+    var request = $http({
+      url: '/register',
+      method: "POST",
+      data: {
+        'username': $scope.username,
+        'password': $scope.password,
+		'state':  $scope.state
+      }
+    })
+    
+    request.success(function(response) {
+      // success
+      console.log(response);
+      if (response.result === "success") {
+        // After you've written the INSERT query in routes/index.js, uncomment the following line
+        window.location.href = "http://localhost:8081/";
+      }
+    });
+    
+    request.error(function(err) {
+      // failed
+      console.log("error: ", err);
+    });
+
+  };
+});
+
 //Q2-a controller 
 app.controller('userController', function($scope, $http) {
 

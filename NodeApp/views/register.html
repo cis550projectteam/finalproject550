@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="angularjsNodejsTutorial">
 
   <head>
     <meta charset="UTF-8">
@@ -26,9 +26,9 @@
     </nav>
 
     <div class="heading">Register</div>
-     <div class="container login-container" ng-controller="loginController">
+     <div class="container register-container" ng-controller="registerController">
 	 <p>This is the state you choose to live</p>
-	  <input type="text" class="input state" ng-model="State" />
+	  <input type="text" class="input state" ng-model="state" />
 	  <p>This is your username</p>
       <input type="text" class="input username"  ng-model="username" />
 	  <p>This is your password</p>

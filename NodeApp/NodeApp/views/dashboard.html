@@ -99,9 +99,21 @@
           <th>Recent Price/Rent</th>
           </tr>
           <tr ng-repeat="result in statesInfo">
-          <th><input type="button" value={{result.RegionName}} class="btn"/></th><th>{{result.RecentPrice}}</th>
-          
+          <th><button class="button" ng-click="getService(result)">{{result.RegionName}}</button></th><th>{{result.RecentPrice}}</th>
           </tr>
+        </table>
+		<table ng-if=service border="1">
+		<div class="h5">Surrounding Services</div>
+		<tr>
+          <th>Category</th>
+          <th>Name</th>
+		  <th>Ratings</th>
+		  <th>Address</th>
+		  
+          </tr>
+        <tr ng-repeat="y in service">
+        <th>{{y.category}}</th> <th>{{y.service_name}}</th> <th>{{y.stars}}</th><th>{{y.address}}</th>       
+        </tr>
         </table>
 
       </div>

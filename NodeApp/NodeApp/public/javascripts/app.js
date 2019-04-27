@@ -85,6 +85,25 @@ app.controller('userController', function($scope, $http) {
       console.log('err');
     });
     };
+	
+	$scope.getService = function(input){
+    
+    var request = $http.get('/getService/'+input.RegionName );
+
+      // var request = $http.get('/userPreference')
+    request.success(function(response) {
+      // success
+      $scope.service = response;
+      console.log("$scope.userInfo",$scope.userInfo);
+    });
+    
+    request.error(function(response) {
+      // failed
+      console.log('err');
+    });
+    };
+	
+    
 });
 
 

@@ -135,7 +135,7 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   console.log(cityInput);
   console.log(borInput);
   if(borInput=='BUY'){
-    var query = "select * from price p inner join zipcode z on p.RegionName=z.zip where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' order by p.RecentPrice DESC;";
+    var query = "select * from price p inner join zipcode z on p.RegionName=z.zip  where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' order by p.RecentPrice DESC;";
   }
   else{
     var query = "select * from rent r inner join zipcode z on r.RegionName=z.zip where z.state_name='"+stateInput+"' and r.City = '"+cityInput+"' order by r.RecentPrice DESC;";
@@ -149,15 +149,11 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
     }
   });
 });
-//Q2-b In the "Top Movies" section, display all the Genres as buttons
-// when the user clicks on any genre, show top 10 movies in that genre 
-// ordered first by highest "rating" and then highest "vote_count"
-//Q2-b --> show movie genres
-router.get('/movieGenres', function(req, res) {
-  var query = "select distinct genre from Genres;";
-  // console.log("Printing movie genres' query");
-  // console.log(query);
-
+//get the surrounding services of a zipcode
+router.get('/getService/:input', function(req, res) {
+  console.log(req.params.input);
+  var zipcode=parseInt(req.params.input);
+  var query = "select * from service where postal_code >="+ zipcode+"-5 AND "+"postal_code <="+ zipcode+"+5";
   connection.query(query, function(err, rows, fields) {
     if (err) console.log('query movie genres error',err);
     else {
@@ -165,6 +161,7 @@ router.get('/movieGenres', function(req, res) {
     }
   });
 });
+
 //Q2-b --> send clicked genre in the url
 router.get('/topMovies/:genreClicked', function(req, res) {
 

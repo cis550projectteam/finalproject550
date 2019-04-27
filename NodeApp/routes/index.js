@@ -56,19 +56,26 @@ router.post('/login', function(req, res) {
   // req.body contains the json data sent from the loginController
   // e.g. to get username, use req.body.username
 
-  var query = "REPLACE INTO User (username,pword) VALUES (" + "'" + req.body.username + "'" + ", " + "'" + req.body.password + "')"; /* Write your query here and uncomment line 21 in javascripts/app.js*/
+  var query = "select * from User where username=" + "'"+ req.body.username + "'" + "and pword=" + "'"+req.body.password + "'"; 
   //;
   connection.query(query, function(err, rows, fields) {
     console.log("rows", rows);
     console.log("fields", fields);
     if (err) console.log('insert error: ', err);
     else {
-      res.json({
-        result: 'success'
-      });
-    }
-  });
+	  if (rows.length != 0) {
+            res.json({
+              result: 'success'
+            });
+      
+        }
+	}
+   
 });
+
+});
+
+
 
 //Q2-a In the "Users" section, show all the registered users one below the other
 router.get('/users', function(req, res) {
@@ -85,6 +92,34 @@ router.get('/users', function(req, res) {
   });
 });
 
+// register uses POST request
+router.post('/register', function(req, res) {
+  // use console.log() as print() in case you want to debug, example below:
+
+  // req.body contains the json data sent from the loginController
+  // e.g. to get username, use req.body.username
+  
+  var query = "select * from User where username="+"'" + req.body.username + "'"; /* Write your query here and uncomment line 21 in javascripts/app.js*/
+  //;
+  connection.query(query, function(err, rows, fields) {
+    console.log("rows", rows);
+    console.log("fields", fields);
+    if (err) console.log('insert error: ', err);
+    else {
+	  if (rows.length == 0) {
+		  var query="INSERT INTO User (username,pword,state) VALUES (" + "'" + req.body.username + "'" + " ,"+ "'" + req.body.password +"'" + " ," +"'"+ req.body.state +"')";
+		  connection.query(query, function(err, re, fields) {
+			  console.log("rows");
+			  res.json({
+				  result:'success'
+			  });
+			  
+		  });
+         
+	  }
+    }
+  });
+});
 //Q2-b In the "Top Movies" section, display all the Genres as buttons
 // when the user clicks on any genre, show top 10 movies in that genre 
 // ordered first by highest "rating" and then highest "vote_count"

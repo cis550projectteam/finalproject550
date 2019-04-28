@@ -147,16 +147,32 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   console.log(cityInput);
   console.log(borInput);
   if(borInput=='BUY'){
-    var query = "select * from price p inner join zipcode z on p.RegionName=z.zip where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' order by p.RecentPrice DESC;";
+    var query = "select p.RegionName as RegionName,avg(RecentPrice)as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
+	    avg(p.avg2014) as avg2014, avg(p.avg2015) as avg2015,avg(p.avg2016) as avg2016, avg(p.avg2017) as avg2017,avg(p.avg2018) as avg2018,\
+		avg(t.avg2014) as tavg2014, avg(t.avg2015) as tavg2015,avg(t.avg2016) as tavg2016, avg(t.avg2017) as tavg2017,avg(t.avg2018) as tavg2018\
+       	from price p inner join zipcode z on p.RegionName=z.zip inner join PTR t on t.RegionName=p.RegionName left outer join service s on p.RegionName=s.postal_code \
+		where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' group by p.RegionName order by p.RecentPrice DESC;";
   }
   else{
-    var query = "select * from rent r inner join zipcode z on r.RegionName=z.zip where z.state_name='"+stateInput+"' and r.City = '"+cityInput+"' order by r.RecentPrice DESC;";
+    var query = "select r.RegionName as RegionName,avg(RecentPrice) as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
+	avg(r.avg2014) as avg2014,avg(r.avg2015) as avg2015, avg(r.avg2016) as avg2016,avg(r.avg2017) as avg2017, avg(r.avg2018) as avg2018 ,\
+	avg(t.avg2014) as tavg2014,avg(t.avg2015) as tavg2015, avg(t.avg2016) as tavg2016,avg(t.avg2017) as tavg2017, avg(t.avg2018) as tavg2018 \
+	from rent r inner join zipcode z on r.RegionName=z.zip inner join PTR t on t.RegionName=r.RegionName left outer join service s on r.RegionName=s.postal_code \
+	where z.state_name='"+stateInput+"' and r.City = '"+cityInput+"' group by r.RegionName order by r.RecentPrice DESC;";
   }
   console.log("Here goes the query:");
   console.log(query); 
   connection.query(query, function(err, rows, fields) {
     if (err) console.log('query error',err);
     else {
+		var x;
+		for (x in rows){
+	      rows[x].ptr=parseFloat(Math.round(rows[x].ptr* 100) / 100).toFixed(2);
+	      rows[x].RecentPrice=parseFloat(Math.round(rows[x].RecentPrice* 100) / 100).toFixed(2);
+		  rows[x].avgstar=parseFloat(Math.round(rows[x].avgstar* 100) / 100).toFixed(2);
+	      console.log(rows[x].ptr);
+	      console.log(rows[x].RecentPrice);
+		}
       res.json(rows);
     }
   });

@@ -86,7 +86,75 @@ app.controller('userController', function($scope, $http) {
   });
   };
 
-$scope.getService = function(input){
+  $scope.getService = function(input){
+	  
+	var dataX = [2014, 2015, 2016, 2017, 2018];
+  var dataY = [];
+  var dataZ=[];
+  dataY.push(parseFloat(input.avg2014));
+  dataY.push(parseFloat(input.avg2015));
+  dataY.push(parseFloat(input.avg2016));
+  dataY.push(parseFloat(input.avg2017));
+  dataY.push(parseFloat(input.avg2018));
+  /*
+  dataZ.push(parseFloat(Math.round(input.tavg2014* 100) / 100).toFixed(2));
+  dataZ.push(parseFloat(Math.round(input.tavg2015* 100) / 100).toFixed(2));
+  dataZ.push(parseFloat(Math.round(input.tavg2016* 100) / 100).toFixed(2));
+  dataZ.push(parseFloat(Math.round(input.tavg2017* 100) / 100).toFixed(2));
+  dataZ.push(parseFloat(Math.round(input.tavg2018* 100) / 100).toFixed(2));
+  **/
+  console.log(dataY);
+ 
+  // $('#container').highcharts
+  var chart = Highcharts.chart('container', {
+    title: {
+        text: 'Average Median List Price Per Sq Ft ($)(Past 5 years)',//标题
+        x: -20 //center 设置标题的位置
+    },
+    subtitle: {
+        text: 'Source: https://www.zillow.com/research/data/', //副标题
+        x: -20 //副标题位置
+    },
+    credits:{//右下角的文本
+        enabled: false,
+        position: {//位置设置
+            align: 'right',
+            x: -10,
+            y: -10
+        },
+        href: "http://www.highcharts.com",//点击文本时的链接
+        style: {
+            color:'blue'
+        },
+        text: "Highcharts Demo"//显示的内容
+    },
+    xAxis: {//横轴的数据
+        categories: dataX
+    },
+    yAxis: {//纵轴的数据
+        title: {
+            text: 'Price Per Sq Ft ($/ft^2)'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+        }]
+    },
+    tooltip: {//鼠标移到图形上时显示的提示框
+        valueSuffix: '$/ft^2'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        enabled: false,//去掉右边的 name
+        borderWidth: 0
+    },
+    series: [{
+        name: 'Average Median Price',
+        data: dataY
+    }]
+});
   
   var request = $http.get('/getService/'+input.RegionName );
 

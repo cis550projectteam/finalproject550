@@ -110,13 +110,16 @@
           <th>Zipcode</th>
           <th>Recent Price/Rent</th>
           <th>Population</th>
+		  <th>Surrounding Service Quality</th>
+		  <th>Recent House Price-Rental Ratio</th>
           </tr>
           <tr ng-repeat="result in statesInfo">
-          <th><button class="btn" ng-click="getService(result)">{{result.RegionName}}</button></th><th>{{result.RecentPrice}}</th><th>{{result.population}}</th> 
+          <th><button class="btn" ng-click="getService(result)">{{result.RegionName}}</button></th><th>{{result.RecentPrice}}</th><th>{{result.population}}</th><th>{{result.avgstar}}</th><th>{{result.ptr}}</th>  
           </tr>
         </table>
 
-      </table>
+      <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
       <table ng-if=service border="1">
           <tr>
             <th>Category</th>
@@ -128,82 +131,14 @@
           <th>{{y.category}}</th> <th>{{y.service_name}}</th> <th>{{y.stars}}</th><th>{{y.address}}</th>       
           </tr>
       </table>
-<!-- ############################################################### -->
-        <canvas id="can1" width="800" height="600"></canvas>
-	<script type="text/javascript">
-			var can1 = document.getElementById("can1");
-			var ctx = can1.getContext("2d");
-			nums = [statesInfo[0].RecentPrice,1236,1273,1545,1988];
-			datas = ["11.1-11.2","11.3-11.9","11.10-11.16","11.17-11.23","11.24-11.30"];
-			//画出坐标线
-			function drawBorder(){
-				ctx.beginPath();
-				ctx.moveTo(100,50);
-				ctx.lineTo(100,550);
-				ctx.moveTo(100,550);
-				ctx.lineTo(600,550);
-				ctx.closePath();
-				ctx.stroke();
-			}
-			//画出折线
-			function drawLine(){
-				for (i = 0;i < nums.length-1;i ++){
-					//起始坐标
-					var numsY = 550-nums[i]/500*100;
-					var numsX = i*100+150;
-					//终止坐标
-					var numsNY = 550-nums[i+1]/500*100;
-					var numsNX = (i+1)*100+150;
-					ctx.beginPath();
-					ctx.moveTo(numsX,numsY);
-					ctx.lineTo(numsNX,numsNY);
-					ctx.lineWidth = 6;
-					ctx.strokeStyle = "#80aa33";
-					ctx.closePath();
-					ctx.stroke();
-				}
-			}
-			//绘制折线点的菱形和数值，横坐标值，纵坐标值
-			function drawBlock(){
-				for (i = 0;i <= nums.length;i ++){
-					var numsY = 550-nums[i]/500*100;
-					var numsX = i*100+150;
-					ctx.beginPath();
-					// 画出折线上的方块
-					ctx.moveTo(numsX-4,numsY);
-					ctx.lineTo(numsX,numsY-4);
-					ctx.lineTo(numsX+4,numsY);
-					ctx.lineTo(numsX,numsY+4);
-					ctx.fill();
-					ctx.font = "15px scans-serif";
-					ctx.fillStyle = "black";
-					//折线上的点值
-					var text = ctx.measureText(nums[i]);
-					ctx.fillText(nums[i],numsX-text.width,numsY-10);
-					//绘制纵坐标
-					var colText = ctx.measureText((nums.length-i)*500);
-					ctx.fillText((nums.length-i)*500,90-colText.width,i*100+55);
-					//绘制横坐标并判断
-					if (i < 5){
-						var rowText = ctx.measureText(datas[i]);
-						ctx.fillText(datas[i],numsX-rowText.width/2,570);
-					}else if(i == 5) {
-						return;
-					}
-					ctx.closePath();
-					ctx.stroke();
-				}
-			}
-			drawBorder();
-			drawLine();
-			drawBlock();
-	</script>
+
 
       </div>
     </div> 
-<!-- ############################################################### -->
+
      
     <!-- Include these before the end of body tag in every HTML file -->
+	<script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

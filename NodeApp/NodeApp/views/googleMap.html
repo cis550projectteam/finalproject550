@@ -19,6 +19,7 @@
        * element that contains the map. */
       #map {
         height: 90%;
+        width: 90%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -47,7 +48,7 @@
 
     <div id="zip">
         Zip Code <input type="text" class="input" placeholder="Input a zip code please" id="zipcode"> 
-        <button class="search" ng-click="getInfo()">Search</button>
+        <button class="search" ng-click="get(zipcode)">Search</button>
     </div>
     <div id="service">
        <select id="service_type">
@@ -70,6 +71,8 @@
     <div id="map">
     <script>
       var map;
+      var service_type = document.getElementById('service_type')
+
       function initMap() {
         var lat = 40.7139
         var lng = -74.0076
@@ -79,6 +82,8 @@
           center: Latlng,
           zoom: 16
         });
+        map.addListener('')
+
         var marker = new google.maps.Marker({
           position: Latlng,
           map: map,

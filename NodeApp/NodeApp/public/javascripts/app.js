@@ -192,6 +192,26 @@ app.controller('dummyController', function($scope, $http) {
 */
 
 
+app.controller('mapController', function($scope, $http) {
+  $scope.getService = function(input){  
+    var request = $http.get('/getLocate/'+input.RegionName );
+
+      // var request = $http.get('/userPreference')
+    request.success(function(response) {
+      // success
+      $scope.location = response;
+      console.log("$scope.userInfo",$scope.location);
+    });
+    
+    request.error(function(response) {
+      // failed
+      console.log('err');
+    });
+    };
+});
+
+
+
 app1 = angular.module('graphApp',[]);
 
 app1.controller('crimeController', function($scope, $http) {

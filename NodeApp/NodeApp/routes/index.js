@@ -124,6 +124,22 @@ router.get('/getService/:input', function(req, res) {
     }
   });
 });
+
+
+//get the latitude and longitude of a zipcode for Google map
+router.get('/getLocate/:input', function(req, res) {
+  console.log(req.params.input);
+  var zipcode=parseInt(req.params.input);
+  var query = "select lat, lng from zipcode where zip =="+ zipcode;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log('query map zipcode error',err);
+    else {
+      res.json(rows);
+    }
+  });
+});
+
+
 // //display the filtered result
 // router.get('/userPreference/:inputState', function(req, res) {
 //   var input = req.params.inputState;

@@ -129,8 +129,8 @@ router.get('/getService/:input', function(req, res) {
 //get the latitude and longitude of a zipcode for Google map
 router.get('/getLocate/:input', function(req, res) {
   console.log(req.params.input);
-  var zipcode=parseInt(req.params.input);
-  var query = "select lat, lng from zipcode where zip =="+ zipcode;
+  var zipcode = parseInt(req.params.input);
+  var query = "select lat, lng, RecentPrice from zipcode JOIN price on price.RegionName = zipcode.zip where zip ="+ zipcode;
   connection.query(query, function(err, rows, fields) {
     if (err) console.log('query map zipcode error',err);
     else {

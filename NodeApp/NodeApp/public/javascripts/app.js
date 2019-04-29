@@ -190,3 +190,38 @@ app.controller('dummyController', function($scope, $http) {
   };
 });
 */
+
+
+app1 = angular.module('graphApp',[]);
+
+app1.controller('crimeController', function($scope, $http) {
+  $scope.width = 1000;
+  $scope.height = 500;
+  $scope.yAxis = "Price per sqr ft";
+  $scope.xAxis = "Crime per 100000";
+  // normal variables
+  // Angular function
+  $scope.getCrimePrice = function() {
+
+    var request = $http({
+      url:'/crime',
+      method: "GET"
+    })
+
+    request.success(function(response) {
+      console.log(response);
+      console.log("get here !!!!!!!!")
+      $scope.rawDataPoints = response;
+    });
+
+    request.error(function(err) {
+      console.log("error: ", err);
+    });
+
+  };
+  $scope.getCrimePrice();
+
+  $scope.max_crime = 1500;
+  $scope.max_price = 1100;
+
+});

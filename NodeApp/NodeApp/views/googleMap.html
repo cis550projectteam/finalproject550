@@ -46,11 +46,11 @@
 
     <!-- map -->
 
-    <div id="zip">
+    <div id="zip", ng-controller='mapController'>
         Zip Code <input type="text" class="input" placeholder="Input a zip code please" id="zipcode"> 
-        <button class="search" ng-click="get(zipcode)">Search</button>
+        <button class="search" ng-click="getLocate(zipcode)">Search</button>
     </div>
-    <div id="service">
+    <div id="service", ng-controller='mapController'>
        <select id="service_type">
           <option disabled="" selected="" value=""> -- Show Nearby Services -- </option>
           <option value="Restaurant">restaurant</option>
@@ -74,8 +74,8 @@
       var service_type = document.getElementById('service_type')
 
       function initMap() {
-        var lat = 40.7139
-        var lng = -74.0076
+        var lat = location.lat
+        var lng = location.lng
         var Latlng = {lat: lat , lng: lng}
         var mapInstance =  new google.maps.LatLng(lat, lng)
         map = new google.maps.Map(document.getElementById('map'), {

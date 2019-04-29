@@ -193,8 +193,8 @@ app.controller('dummyController', function($scope, $http) {
 
 
 app.controller('mapController', function($scope, $http) {
-  $scope.getService = function(input){  
-    var request = $http.get('/getLocate/'+input.RegionName );
+  $scope.getLocate = function(input){  
+    var request = $http.get('/getLocate/'+input.zipcode);
 
       // var request = $http.get('/userPreference')
     request.success(function(response) {

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html ng-app = 'angularjsNodejsTutorial' lang="en">
+<html lang="en">
 
   <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,22 +10,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="javascripts/app.js" type="text/javascript"></script>
     <!-- Custom styles for this template-->
-    <link href="/stylesheets/common_new.css" rel="stylesheet">
+    <link href="/stylesheets/common.css" rel="stylesheet">
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 90%;
+        height: 80%;
+        position: relative;
+        top: 300px;
+        left: 260px;
+
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
-        height: 90%;
-        width: 90%;
-        margin: 20px;
+        height: 100%;
+        width: 100%;
+        margin: 10px;
         padding: 0;
       }
+
     </style>
   </head>
 
@@ -36,83 +40,56 @@
       <span class="navbar-brand center">Map Visualization</span>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
-            <a class="nav-item nav-link" href="/crime">Crime visualization</a>
-            <a class="nav-item nav-link active" href="/googleMap">Google Map</a>
+          <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
+          <a class="nav-item nav-link" href="/reference">Reference</a>
         </div>
       </div>
     </nav>
 
     <!-- map -->
-
-    <div id="zip">
-        Zip Code <input type="text" class="input" placeholder="Input a zip code please" id="zipcode"> 
-        <button class="search" ng-click="getInfo()">Search</button>
-    </div>
-    <div id="service">
-       <select id="service_type">
-          <option disabled="" selected="" value=""> -- Show Nearby Services -- </option>
-          <option value="Restaurant">restaurant</option>
-          <option value="Lodging">lodging</option>
-          <option value="gym">gym</option>
-          <option value="cafe">cafe</option>
-          <option value="beauty_salon">beauty salon</option>
-          <option value="shopping_mall">shopping mall</option>
-          <option value="hospital">hospital</option>
-          <option value="church">church</option>
-          <option value="library">library</option>
-          <option value="park">park</option>
-          <option value="supermarket">super market</option>
-          <option value="subway_station">subway station</option>                              
-          <option value="movie_theater">movie theater</option>
-       </select>
-    </div>
     <div id="map">
+      City <input type="text" class="input" placeholder="Input a city please" id="inputCity"/> 
+
     <script>
-      var map;
+
       function initMap() {
-        var lat = 40.7139
-        var lng = -74.0076
-        var Latlng = {lat: lat , lng: lng}
-        var mapInstance =  new google.maps.LatLng(lat, lng)
-        map = new google.maps.Map(document.getElementById('map'), {
+        var Latlng = {lat: 40.7139, lng: -74.0076}
+        var map = new google.maps.Map(document.getElementById('map'), {
           center: Latlng,
           zoom: 16
         });
+
         var marker = new google.maps.Marker({
           position: Latlng,
           map: map,
+          title: 'Your Interested House!'
         });
 
         var request = {
-          location: mapInstance,
-          radius: '150',
-          type: ['restaurant']
+        location: Latlng,
+        radius: '500',
+        type: ['restaurant']
         };
+
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, callback);
       }
+
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
             var place = results[i];
-            createMarker(place);
+            createMarker(results[i]);
           }
         }
       }
-      function createMarker(place) {
-        new google.maps.Marker({
-          position: place.geometry.location,
-          map: map,
-          title: place.name,
-          icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
-        });
-      }
-    </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZUngyEa8reGFez6P34YMi5qpl8OiZ3ss&callback=initMap&libraries=places"
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZUngyEa8reGFez6P34YMi5qpl8OiZ3ss&callback=initMap"
     async defer></script>
     </div>
+
+
     <!-- Include these before the end of body tag in every HTML file -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

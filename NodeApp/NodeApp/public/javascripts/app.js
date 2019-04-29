@@ -193,21 +193,89 @@ app.controller('dummyController', function($scope, $http) {
 
 
 app.controller('mapController', function($scope, $http) {
+  var lat;
+  var lng;
+  var map;
+  var service_type = "";
+  console.log('service',service_type);
   $scope.getLocate = function(input){  
-    var request = $http.get('/getLocate/'+input.zipcode);
 
-      // var request = $http.get('/userPreference')
+    var zipcode = document.getElementById("zipcode").value; 
+    var request = $http.get('/getLocate/'+ zipcode);
+    console.log("getting zip "+zipcode);
+    // var request = $http.get('/userPreference')
     request.success(function(response) {
       // success
-      $scope.location = response;
-      console.log("$scope.userInfo",$scope.location);
+      lat = response[0].lat;
+      lng = response[0].lng;
+      console.log("user location success " + lat);
+
+      console.log('service',service_type);
+
+      function initMap() {
+        var Latlng = {lat: lat , lng: lng}
+        console.log(Latlng)
+        var mapInstance =  new google.maps.LatLng(lat, lng)
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: Latlng,
+          zoom: 17
+        });
+        infowindow = new google.maps.InfoWindow()
+        
+        map.addListener('click', function(e) {
+            infowindow.open(map);
+        });
+
+        var marker = new google.maps.Marker({
+          position: Latlng,
+          map: map,
+        });
+        
+        service_type = document.getElementById("service_type").value;
+
+        var request = {
+            location: mapInstance,
+            radius: '150',
+            type: [service_type]
+        };
+        service = new google.maps.places.PlacesService(map);
+        service.nearbySearch(request, callback);
+
+      }
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            createMarker(place);
+          }
+        }
+      }
+      function createMarker(place) {
+        marks = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name,
+          icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+        });
+
+        google.maps.event.addListener(marks,'click',function(e) {
+            infowindow.setContent(marks.getTitle());
+            infowindow.open(map,marks);
+        });
+      }
+      initMap();
+
     });
     
-    request.error(function(response) {
-      // failed
-      console.log('err');
-    });
+      request.error(function(response) {
+        // failed
+        console.log('err');
+      });
     };
+
+      // var service_type = document.getElementById('service_type');
+     
+
 });
 
 

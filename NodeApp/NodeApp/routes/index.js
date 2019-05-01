@@ -231,7 +231,21 @@ router.get('/crime', function(req, res) {
   });
 })
 
-
+router.get('/visState/:state', function(req, res) {
+  var stateInput = req.params.state;
+  console.log(stateInput);
+  console.log("I AM HERE!")
+  var query = "SELECT * from (SELECT crime_rate_per_100000 as crime, price, x.CountyName, x.State FROM crime_county, (SELECT CountyName, State, AVG(RecentPrice) as price FROM price group by CountyName) x WHERE crime_county.county = x.CountyName and crime_county.state = x.State ORDER BY price DESC LIMIT 1,100000) m where State ='"+stateInput+"' order by crime desc limit 1, 100000";
+  console.log(query);
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+      console.log(res);
+    }
+  });
+});
 
 //Q2-b In the "Top Movies" section, display all the Genres as buttons
 // when the user clicks on any genre, show top 10 movies in that genre 

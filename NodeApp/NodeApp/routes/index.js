@@ -49,7 +49,13 @@ router.get('/crimeVis', function(req, res) {
   res.sendFile(path.join(__dirname, '../', 'views', 'crimeVis.html'));
 });
 
+// router.get('/cityImage', function(req, res) {
+//   res.sendFile(path.join(__dirname, '../', 'views', 'cityImage.html'));
+// });
 
+router.get('/cityImage', function(req, res) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
+});
 // To add a new page, use the templete below
 /*
 router.get('/routeName', function(req, res) {
@@ -194,6 +200,12 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   });
 });
 
+// // image search router
+// router.get('/userPreference/:state/:city', function(req, res) {
+//   var stateInput = req.params.state;
+//   var cityInput = req.params.city;
+
+// });
 
 router.get('/crime', function(req, res) {
   var query = 'SELECT * from (SELECT crime_rate_per_100000 as crime, price, x.CountyName, x.State FROM crime_county, (SELECT CountyName, State, AVG(RecentPrice) as price FROM price group by CountyName) x WHERE crime_county.county = x.CountyName and crime_county.state = x.State ORDER BY price DESC LIMIT 1,100000) m order by crime desc limit 1, 100000';

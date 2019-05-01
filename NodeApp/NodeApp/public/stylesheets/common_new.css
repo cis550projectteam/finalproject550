@@ -57,6 +57,9 @@ ody {
   float: left;
 }
 /* ~~ Top Navigation Bar ~~ */
+.nav-container {
+  margin: 20px auto;
+}
 
 #navigation-container {
   width: 100%;

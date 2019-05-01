@@ -6,3 +6,4 @@ Basic Functionality Descriptions:
 4. See the surrounding services of a certain region by clicking on the zipcode of the search result.
 5. See the relation of housing price and crime rate.
 6. Checkout the surrounding service through Google map api in the neighborhood based on a zipcode.
+7. Use Bing Search API to search city image on the web.

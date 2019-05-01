@@ -83,6 +83,12 @@ router.post('/login', function(req, res) {
             });
       
         }
+		else{
+			res.json({
+              result: 'fail'
+            });
+      
+		}
 	}
    
 });
@@ -113,6 +119,11 @@ router.post('/register', function(req, res) {
 			  
 		  });
          
+	  }
+	  else if(rows.length !=0){
+		  res.json({
+				  result:'fail'
+			  });
 	  }
     }
   });

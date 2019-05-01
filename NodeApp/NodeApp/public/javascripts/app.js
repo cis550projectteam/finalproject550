@@ -18,14 +18,20 @@ app.controller('loginController', function($scope, $http) {
       // success
       console.log(response);
       if (response.result === "success") {
+		alert("Welcome");
         // After you've written the INSERT query in routes/index.js, uncomment the following line
         window.location.href = "http://localhost:8081/dashboard";
       }
+	  else if(response.result === "fail"){
+		  alert("Wrong usrname or password");
+	  }
     });
     
     request.error(function(err) {
       // failed
+	  
       console.log("error: ", err);
+	  
     });
 
   };
@@ -51,12 +57,17 @@ app.controller('registerController', function($scope, $http) {
       console.log(response);
       if (response.result == "success") {
         // After you've written the INSERT query in routes/index.js, uncomment the following line
+		alert("register succssfully!");
         window.location.href = "http://localhost:8081/";
       }
+	  else if(response.result === "fail"){
+		  alert("fail to register, please try again");
+	  }
     });
     
     request.error(function(err) {
       // failed
+	  
       console.log("error: ", err);
     });
 

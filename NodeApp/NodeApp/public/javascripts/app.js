@@ -291,6 +291,39 @@ app.controller('mapController', function($scope, $http) {
 
 
 
+// app1 = angular.module('graphApp',[]);
+
+// app1.controller('crimeController', function($scope, $http) {
+//   $scope.width = 1000;
+//   $scope.height = 500;
+//   $scope.yAxis = "Price per sqr ft";
+//   $scope.xAxis = "Crime per 100000";
+//   // normal variables
+//   // Angular function
+//   $scope.getCrimePrice = function() {
+
+//     var request = $http({
+//       url:'/crime',
+//       method: "GET"
+//     })
+
+//     request.success(function(response) {
+//       console.log(response);
+//       console.log("get here !!!!!!!!")
+//       $scope.rawDataPoints = response;
+//     });
+
+//     request.error(function(err) {
+//       console.log("error: ", err);
+//     });
+
+//   };
+//   $scope.getCrimePrice();
+
+//   $scope.max_crime = 1500;
+//   $scope.max_price = 1100;
+
+// });
 app.controller('crimeController', function($scope, $http) {
   $scope.width = 1000;
   $scope.height = 500;
@@ -347,6 +380,58 @@ app.controller('crimeController', function($scope, $http) {
 
 });
 
+app.controller('cityImageController', function($scope, $http) {    
+  $scope.getImage = function(){
+    var selections = document.getElementById('selected_state');
+    var city = document.getElementById("inputCity").value;
+    var state = selections.options[selections.selectedIndex].text;
+    
+    var request = $http.get('/cityImg/' + state + '/' + city); 
+
+    // var request = $http.get('/userPreference')
+  request.success(function(response) {
+    // success
+    $scope.statesInfo = response;
+    // console.log("$scope.userInfo",$scope.userInfo);
+  });
+  
+  request.error(function(response) {
+    // failed
+    console.log('err');
+  });
+
+  //code from the microsoft tutorial
+    // Cookie names for data being stored
+API_KEY_COOKIE   = "14e08e1900ee442b967f50df0c1c875e"; //bing-search-api-key
+CLIENT_ID_COOKIE = "shuairui"; //bing-search-client-id
+// The Bing Image Search API endpoint
+BING_ENDPOINT = "https://api.cognitive.microsoft.com/bing/v7.0/images/search";
+
+try { //Try to use localStorage first
+    localStorage.getItem;   
+
+    window.retrieveValue = function (name) {
+        return localStorage.getItem(name) || "";
+    }
+    window.storeValue = function(name, value) {
+        localStorage.setItem(name, value);
+    }
+} catch (e) {
+    //If the browser doesn't support localStorage, try a cookie
+    window.retrieveValue = function (name) {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var keyvalue = cookies[i].split("=");
+            if (keyvalue[0].trim() === name) return keyvalue[1];
+        }
+        return "";
+    }
+    window.storeValue = function (name, value) {
+        var expiry = new Date();
+        expiry.setFullYear(expiry.getFullYear() + 1);
+        document.cookie = name + "=" + value.trim() + "; expires=" + expiry.toUTCString();
+    }
+}
 
 // Get the stored API subscription key, or prompt if it's not found
 $scope.getSubscriptionKey = function() {

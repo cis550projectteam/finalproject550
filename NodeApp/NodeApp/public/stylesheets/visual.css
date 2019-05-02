@@ -30,7 +30,7 @@ body {
 
 .style1 {
   position: absolute;
-  background:yellow;
+  background:#fff3c6;
   color:black;
   display: none;
   top:-10px;
@@ -43,7 +43,7 @@ body {
 
 
 .dot {
-  background:blue;
+  background:#015f99;
   width:10px;
   height:10px;
   border-radius:50%;
@@ -56,7 +56,7 @@ body {
 
 
 .dot2 {
-  background:red;
+  background:#ff9500;
   width:10px;
   height:10px;
   border-radius:50%;

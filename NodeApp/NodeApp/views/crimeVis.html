@@ -12,6 +12,8 @@
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common_new.css" rel="stylesheet">
     <link href="/stylesheets/visual.css" rel="stylesheet">
+    <link href="/stylesheets/normalize.css" rel="stylesheet">
+    <link href="/stylesheets/skeleton.css" rel="stylesheet">
     <!-- Include your custom css file here if you're making one -->
     <meta charset="utf-8">
   </head>
@@ -25,16 +27,15 @@
           <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
           <a class="nav-item nav-link active" href="/crime">Visualization</a>
           <a class="nav-item nav-link" href="/googleMap">Google Map</a>
-          <a class="nav-item nav-link" href="/cityImage">City Image</a>
+          
         </div>
       </div>
     </nav>
 
-     <div class="container user-container">
-      <div class="jumbotron">
+     <div class="myContainer">
           <div ng-controller="crimeController">
 
-    <select id="selected_crime">
+    <select id="selected_crime" class="myButton">
           <option disabled selected value> -- select a state -- </option>
           <option value="AL">Alabama</option>
           <option value="AK">Alaska</option>
@@ -87,7 +88,7 @@
           <option value="WY">Wyoming</option>
           <option value = "DC">District of Columbia</option>
        </select>
-       <button class="search" ng-click="getState()">Go!</button>
+       <button class="search"  ng-click="getState()">Go!</button>
     <!--dot chart-->
           <h2>Crime vs Price</h2>
           <ul class="chart" style="width:{{width}}px; height:{{height}}px;">
@@ -104,12 +105,10 @@
          
         </div>
       </div>
-    </div>
 </div>
 
- <div class="container user-container">
-<div class="jumbotron">
-  <h2>Heat Map</h2>
+ <div class="myContainer">
+  <h2>Housing Price</h2>
   <!--div ng-controller="heatController"-->
 <div id="tooltip"></div><!-- div to hold tooltip. -->
 <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
@@ -144,7 +143,6 @@
   
   d3.select(self.frameElement).style("height", "600px"); 
 </script>
-</div>
 </div>
 </div>
 

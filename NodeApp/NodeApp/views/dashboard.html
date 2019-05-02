@@ -12,6 +12,8 @@
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common_new.css" rel="stylesheet">
     <link href="/stylesheets/dashboard.css" rel="stylesheet">
+     <link href="/stylesheets/normalize.css" rel="stylesheet">
+    <link href="/stylesheets/skeleton.css" rel="stylesheet">
     <style>
         table {
           border-collapse: collapse;
@@ -40,7 +42,7 @@
     </nav>
 
     <!-- User Content -->
-    <div class="container user-container" ng-controller="userController">
+    <div ng-controller="userController">
       <div class="jumbotron">
         <div class="h5">Describe your dream house</div>
         <select id="selected_state">

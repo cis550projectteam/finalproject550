@@ -13,17 +13,16 @@
 </head>
 <body onload="document.forms.bing.query.focus();">
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <span class="navbar-brand center">Bing Search</span>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
           <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
           <a class="nav-item nav-link" href="/crimeVis">Crime visualization</a>
           <a class="nav-item nav-link" href="/googleMap">Google Map</a>
-          <a class="nav-item nav-link active" href="/cityImage">City Image</a>
       </div>
     </div>
-</nav>
+</nav> -->
 
 <form name="bing" onsubmit="return newBingImageSearch(this)">
 
@@ -79,7 +78,7 @@
     <h1>Bing Image Search</h2>    
 
         <input type="text" name="query" id="term" placeholder="Search for images" autocomplete=off>
-
+        <a href="/dashboard">Back to Dashboard</a>
         <p>Aspect
     <input type=radio name="aspect" id="any" value="all" checked>
         <label for="any">Any</label>

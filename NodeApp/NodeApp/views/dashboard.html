@@ -36,7 +36,6 @@
           <a class="nav-item nav-link active" href="/dashboard">Dashboard</a>
           <a class="nav-item nav-link" href="/crimeVis">Crime visualization</a>
           <a class="nav-item nav-link" href="/googleMap">Google Map</a>
-          <a class="nav-item nav-link" href="/cityImage">City Image</a>
         </div>
       </div>
     </nav>
@@ -106,6 +105,10 @@
        </select>
        <!-- <button class="button" name="best_of" ng-click="getBestOf()">Submit</button> -->
        <button class="search" ng-click="getInfo()">Search</button>
+       <a href="/cityImage">
+        <button class="search">Explore</button>
+       </a>
+       
         <!-- Display the results -->
         <table class='table' ng-if=statesInfo>
           <caption align="top" class="input">Explore the Neighborhood</caption>

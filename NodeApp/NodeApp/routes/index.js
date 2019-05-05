@@ -180,18 +180,48 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   console.log(cityInput);
   console.log(borInput);
   if(borInput=='BUY'){
-    var query = "select p.RegionName as RegionName,avg(RecentPrice)as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
-	    avg(p.avg2014) as avg2014, avg(p.avg2015) as avg2015,avg(p.avg2016) as avg2016, avg(p.avg2017) as avg2017,avg(p.avg2018) as avg2018,\
-		avg(t.avg2014) as tavg2014, avg(t.avg2015) as tavg2015,avg(t.avg2016) as tavg2016, avg(t.avg2017) as tavg2017,avg(t.avg2018) as tavg2018\
-       	from price p inner join zipcode z on p.RegionName=z.zip inner join PTR t on t.RegionName=p.RegionName left outer join service s on p.RegionName=s.postal_code \
-		where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' group by p.RegionName order by p.RecentPrice DESC;";
+    // var query = "select p.RegionName as RegionName,avg(RecentPrice)as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
+	  //   avg(p.avg2014) as avg2014, avg(p.avg2015) as avg2015,avg(p.avg2016) as avg2016, avg(p.avg2017) as avg2017,avg(p.avg2018) as avg2018,\
+		// avg(t.avg2014) as tavg2014, avg(t.avg2015) as tavg2015,avg(t.avg2016) as tavg2016, avg(t.avg2017) as tavg2017,avg(t.avg2018) as tavg2018\
+    //    	from price p inner join zipcode z on p.RegionName=z.zip inner join PTR t on t.RegionName=p.RegionName left outer join service s on p.RegionName=s.postal_code \
+    // where z.state_name='"+stateInput+"' and p.City = '"+cityInput+"' group by p.RegionName order by p.RecentPrice DESC;";
+    var query = "Select temp3.RegionName, RecentPrice, temp3.avg2014,temp3.avg2015,temp3.avg2016,temp3.avg2017,temp3.avg2018, population, avgstar, PTR.RecentPTR, temp3.state, temp3.city\
+    from\
+    (Select p.RegionName as RegionName, p.RecentPrice as RecentPrice, p.avg2014, p.avg2015, p.avg2016, p.avg2017, p.avg2018, population, avgstar, temp2.state, temp2.city\
+    from\
+    (Select postal_code, avgstar, population, z.state_name as state, z.city\
+    from\
+    zipcode z join\
+    (Select postal_code,avg(stars) as avgstar\
+    from service\
+    group by postal_code) temp on temp.postal_code = z.zip \
+    Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
+    ) temp2 join price p on temp2.postal_code=p.RegionName\
+    ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
+    Order by RecentPrice DESC\
+    "
   }
   else{
-    var query = "select r.RegionName as RegionName,avg(RecentPrice) as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
-	avg(r.avg2014) as avg2014,avg(r.avg2015) as avg2015, avg(r.avg2016) as avg2016,avg(r.avg2017) as avg2017, avg(r.avg2018) as avg2018 ,\
-	avg(t.avg2014) as tavg2014,avg(t.avg2015) as tavg2015, avg(t.avg2016) as tavg2016,avg(t.avg2017) as tavg2017, avg(t.avg2018) as tavg2018 \
-	from rent r inner join zipcode z on r.RegionName=z.zip inner join PTR t on t.RegionName=r.RegionName left outer join service s on r.RegionName=s.postal_code \
-	where z.state_name='"+stateInput+"' and r.City = '"+cityInput+"' group by r.RegionName order by r.RecentPrice DESC;";
+  //   var query = "select r.RegionName as RegionName,avg(RecentPrice) as RecentPrice, avg(population) as population, avg(s.stars) as avgstar, avg(t.RecentPTR) as ptr,\
+	// avg(r.avg2014) as avg2014,avg(r.avg2015) as avg2015, avg(r.avg2016) as avg2016,avg(r.avg2017) as avg2017, avg(r.avg2018) as avg2018 ,\
+	// avg(t.avg2014) as tavg2014,avg(t.avg2015) as tavg2015, avg(t.avg2016) as tavg2016,avg(t.avg2017) as tavg2017, avg(t.avg2018) as tavg2018 \
+	// from rent r inner join zipcode z on r.RegionName=z.zip inner join PTR t on t.RegionName=r.RegionName left outer join service s on r.RegionName=s.postal_code \
+  // where z.state_name='"+stateInput+"' and r.City = '"+cityInput+"' group by r.RegionName order by r.RecentPrice DESC;";
+  var query = "Select temp3.RegionName, RecentPrice, temp3.avg2014,temp3.avg2015,temp3.avg2016,temp3.avg2017,temp3.avg2018, population, avgstar, PTR.RecentPTR, temp3.state, temp3.city\
+  from\
+  (Select r.RegionName as RegionName, r.RecentPrice as RecentPrice, r.avg2014, r.avg2015, r.avg2016, r.avg2017, r.avg2018, population, avgstar, temp2.state, temp2.city\
+  from\
+  (Select postal_code, avgstar, population, z.state_name as state, z.city\
+  from\
+  zipcode z join\
+  (Select postal_code,avg(stars) as avgstar\
+  from service\
+  group by postal_code) temp on temp.postal_code = z.zip \
+  Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
+  ) temp2 join rent r on temp2.postal_code=r.RegionName\
+  ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
+  Order by RecentPrice DESC\
+  "
   }
   console.log("Here goes the query:");
   console.log(query); 

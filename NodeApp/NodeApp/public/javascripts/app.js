@@ -90,19 +90,42 @@ app.controller('userController', function($scope, $http) {
 		$scope.statesInfo=las_rent;
 	}
 	else{
-		var request = $http.get('/userPreference/' + state + '/' + city + '/' + bor); 
-  request.success(function(response) {
+		var request = $http.get('/userPreferencecache/' + state + '/' + city + '/' + bor); 
+		request.success(function(response) {
     // success
-  var jsonStr = JSON.stringify(response);
-  console.log(jsonStr);
-    $scope.statesInfo = response;
+	    if(response.length===0){
+			var request = $http.get('/userPreference/' + state + '/' + city + '/' + bor); 
+            request.success(function(response) {
+    // success
+            var jsonStr = JSON.stringify(response);
+            console.log(jsonStr);
+            $scope.statesInfo = response;
     // console.log("$scope.userInfo",$scope.userInfo);
-  });
+           });
   
-  request.error(function(response) {
+           request.error(function(response) {
     // failed
-    console.log('err');
-  });
+            console.log('err');
+           });
+	    }
+	    else{
+           var jsonStr = JSON.stringify(response);
+           console.log(jsonStr);
+           $scope.statesInfo = response;
+          // console.log("$scope.userInfo",$scope.userInfo);
+	    }
+		});
+		
+        request.error(function(response) {
+    // failed
+            console.log('err');
+           });
+		
+	
+        
+  
+		
+	
 	}
   };
 

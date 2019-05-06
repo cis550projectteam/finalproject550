@@ -171,6 +171,31 @@ router.get('/getLocate/:input', function(req, res) {
 //     }
 //   });
 // });
+//cache
+router.get('/userPreferencecache/:state/:city/:bor', function(req, res) {
+  var stateInput = req.params.state;
+  var cityInput = req.params.city;
+  var borInput = req.params.bor
+  if(borInput=='BUY'){
+	  var query="select * from cache where city = '" + cityInput + "' and state = '"+ stateInput +"'";
+  }
+  else{
+	  var query="select * from cacher where city = '" + cityInput + "' and state = '"+ stateInput +"'";
+  }
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log('query error',err);
+    else {
+		var x;
+		for (x in rows){
+	      rows[x].RecentPTR=parseFloat(Math.round(rows[x].RecentPTR* 100) / 100).toFixed(2);
+	      rows[x].RecentPrice=parseFloat(Math.round(rows[x].RecentPrice* 100) / 100).toFixed(2);
+		  rows[x].avgstar=parseFloat(Math.round(rows[x].avgstar* 100) / 100).toFixed(2);
+	      
+		}
+      res.json(rows);
+    }
+  });
+});
 
 router.get('/userPreference/:state/:city/:bor', function(req, res) {
   var stateInput = req.params.state;
@@ -290,39 +315,6 @@ router.get('/visState/:state', function(req, res) {
 });
 
 
-//Q2-b In the "Top Movies" section, display all the Genres as buttons
-// when the user clicks on any genre, show top 10 movies in that genre 
-// ordered first by highest "rating" and then highest "vote_count"
-//Q2-b --> show movie genres
-router.get('/movieGenres', function(req, res) {
-  var query = "select distinct genre from Genres;";
-  // console.log("Printing movie genres' query");
-  // console.log(query);
-
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log('query movie genres error',err);
-    else {
-      res.json(rows);
-    }
-  });
-});
-
-
-
-// //Q3 step2 --> get recommended movie genres
-// router.get('/recommendedMovies/:inputGenre', function(req, res) {
-//   var input = req.params.inputGenre;
-//   // var query = "select distinct genre from Genres g join Movies m on g.movie_id=m.id where m.id=" + input + ";";
-//   var query = "select m.id, genre from Genres g join Movies m on g.movie_id = m.id where genre = " + input + ";";
-//   // console.log("here comes the recommended movies query");
-//   console.log("Q3 step2 query", query);
-//   connection.query(query, function(err, rows, fields) {
-//     if (err) console.log(err);
-//     else {
-//       res.json(rows);
-//     }
-//   });
-// });
 
 
 

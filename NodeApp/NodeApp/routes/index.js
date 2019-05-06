@@ -223,18 +223,17 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   Order by RecentPrice DESC\
   "
   }
-  console.log("Here goes the query:");
-  console.log(query); 
+ 
+ 
   connection.query(query, function(err, rows, fields) {
     if (err) console.log('query error',err);
     else {
 		var x;
 		for (x in rows){
-	      rows[x].ptr=parseFloat(Math.round(rows[x].ptr* 100) / 100).toFixed(2);
+	      rows[x].RecentPTR=parseFloat(Math.round(rows[x].RecentPTR* 100) / 100).toFixed(2);
 	      rows[x].RecentPrice=parseFloat(Math.round(rows[x].RecentPrice* 100) / 100).toFixed(2);
 		  rows[x].avgstar=parseFloat(Math.round(rows[x].avgstar* 100) / 100).toFixed(2);
-	      console.log(rows[x].ptr);
-	      console.log(rows[x].RecentPrice);
+	      
 		}
       res.json(rows);
     }

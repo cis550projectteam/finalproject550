@@ -306,35 +306,8 @@ router.get('/movieGenres', function(req, res) {
     }
   });
 });
-//Q2-b --> send clicked genre in the url
-router.get('/topMovies/:genreClicked', function(req, res) {
 
-  var genreInput = req.params.genreClicked;    // if you have a custom parameter
-  var query = "select title, rating, vote_count from Genres g JOIN Movies m on g.movie_id = m.id where genre = '" + genreInput + "' order by rating DESC,vote_count DESC limit 10;";
-  // console.log("here comes the genreClicked query");
-  // console.log(query);
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      res.json(rows);
-    }
-  });
-});
 
-//Q3 step1 --> get recommended movie genres
-router.get('/recommendedMovieGenres/:inputMovieId', function(req, res) {
-  var input = req.params.inputMovieId;
-  // var query = "select title from Movies where id = " + input;
-  var query = "select distinct genre from Genres g join Movies m on g.movie_id=m.id where m.id=" + input + ";";
-  // console.log("here comes the recommended movies query");
-  console.log(query);
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      res.json(rows);
-    }
-  });
-});
 
 // //Q3 step2 --> get recommended movie genres
 // router.get('/recommendedMovies/:inputGenre', function(req, res) {
@@ -351,22 +324,7 @@ router.get('/recommendedMovieGenres/:inputMovieId', function(req, res) {
 //   });
 // });
 
-//Q4 --> show a “top voted” movie in each Genre category for that year.
-router.get('/bestOfYear/:inputYear', function(req, res) {
-  var input = req.params.inputYear
-  var query1 = "select temp1.genre, title, max_vote_count\
-  from (select * from (Genres g JOIN Movies m on g.movie_id = m.id) where release_year = " + input +") temp1 inner join\
-  (select genre, max(vote_count) max_vote_count from (Genres g JOIN Movies m on g.movie_id = m.id) where release_year = "+ input + " group by genre) temp2\
-  on temp1.genre=temp2.genre and temp1.vote_count = temp2.max_vote_count order by temp1.genre;"
-  console.log("here comes the best of query");
-  console.log(query1);
-  connection.query(query1, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      res.json(rows);
-    }
-  });
-});
+
 
 
 // Q6 --> external API

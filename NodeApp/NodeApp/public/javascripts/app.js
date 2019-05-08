@@ -233,10 +233,13 @@ app.controller('mapController', function($scope, $http) {
       // success
       lat = response[0].lat;
       lng = response[0].lng;
+      var setprice = document.getElementById('price');
+      var price = String(response[0].RecentPrice);
+      setprice.value = price;
       console.log("user location success " + lat);
-
+      console.log('price fetched '+price)
       console.log('service',service_type);
-
+      var zipcode = document
       function initMap() {
         var Latlng = {lat: lat , lng: lng}
         console.log(Latlng)
@@ -245,17 +248,16 @@ app.controller('mapController', function($scope, $http) {
           center: Latlng,
           zoom: 17
         });
-        infowindow = new google.maps.InfoWindow()
-        
-        map.addListener('click', function(e) {
-            infowindow.open(map);
-        });
-
         var marker = new google.maps.Marker({
           position: Latlng,
           map: map,
+          title: price
         });
-        
+        infowindow = new google.maps.InfoWindow()
+        // map.event.addListener(marker, 'click', function(e) {
+        //     infowindow.setContent(marker.getTitle());
+        //     infowindow.open(map);
+        // });        
         service_type = document.getElementById("service_type").value;
 
         var request = {
@@ -291,7 +293,6 @@ app.controller('mapController', function($scope, $http) {
       initMap();
 
     });
-    
       request.error(function(response) {
         // failed
         console.log('err');

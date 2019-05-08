@@ -214,14 +214,14 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
     from\
     (Select p.RegionName as RegionName, p.RecentPrice as RecentPrice, p.avg2014, p.avg2015, p.avg2016, p.avg2017, p.avg2018, population, avgstar, temp2.state, temp2.city\
     from\
-    (Select postal_code, avgstar, population, z.state_name as state, z.city\
+    (Select zip, postal_code, avgstar, population, z.state_name as state, z.city\
     from\
-    zipcode z join\
+    zipcode z left outer join\
     (Select postal_code,avg(stars) as avgstar\
     from service\
     group by postal_code) temp on temp.postal_code = z.zip \
     Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
-    ) temp2 join price p on temp2.postal_code=p.RegionName\
+    ) temp2 join price p on temp2.zip=p.RegionName\
     ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
     Order by RecentPrice DESC\
     "
@@ -236,14 +236,14 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   from\
   (Select r.RegionName as RegionName, r.RecentPrice as RecentPrice, r.avg2014, r.avg2015, r.avg2016, r.avg2017, r.avg2018, population, avgstar, temp2.state, temp2.city\
   from\
-  (Select postal_code, avgstar, population, z.state_name as state, z.city\
+  (Select zip, postal_code, avgstar, population, z.state_name as state, z.city\
   from\
-  zipcode z join\
+  zipcode z left outer join\
   (Select postal_code,avg(stars) as avgstar\
   from service\
   group by postal_code) temp on temp.postal_code = z.zip \
   Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
-  ) temp2 join rent r on temp2.postal_code=r.RegionName\
+  ) temp2 join rent r on temp2.zip=r.RegionName\
   ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
   Order by RecentPrice DESC\
   "

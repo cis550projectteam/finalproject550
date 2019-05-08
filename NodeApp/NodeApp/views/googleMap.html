@@ -12,6 +12,8 @@
     <script src="javascripts/app.js" type="text/javascript"></script>
     <!-- Custom styles for this template-->
     <link href="/stylesheets/common_new.css" rel="stylesheet">
+    <link href="/stylesheets/skeleton.css" rel="stylesheet">
+
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <style>
@@ -20,6 +22,7 @@
       #map {
         height: 90%;
         width: 90%;
+        margin: 40px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -49,10 +52,8 @@
     <div id="zip" ng-controller='mapController'>
         Zip Code <input type="text" class="input" placeholder="Input a zip code please" id="zipcode"> 
         <button class="search" ng-click="getLocate()" ng-controller='mapController'>Search</button>
-        <br>
         <h5> Price Per Squared Feet in Zip Code Area: 
         <input id="price" type = "text"  placeholder = "Price Per Squared Feet" ng-controller='mapController' > </input></h5>
-        <br>
     </div>
     <div id="service", ng-controller='mapController'>
        <select id="service_type">
@@ -72,7 +73,7 @@
           <option value="movie_theater">movie theater</option>
           <option value="train_station">train station</option>
        </select>
-    </div><br>
+    </div>
 
     <div id="map" ng-controller='mapController'>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZUngyEa8reGFez6P34YMi5qpl8OiZ3ss&callback=initMap&libraries=places"

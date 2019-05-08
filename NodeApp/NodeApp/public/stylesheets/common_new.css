@@ -20,7 +20,8 @@
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: url(https://www.tradersunderground.co/wp-content/uploads/2018/02/350829-widescreen-website-background-1920x1080-windows-xp.jpg) center center no-repeat fixed;
+  /* background: url(https://www.tradersunderground.co/wp-content/uploads/2018/02/350829-widescreen-website-background-1920x1080-windows-xp.jpg) center center no-repeat fixed; */
+  background: url("backgroundImg.jpg");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

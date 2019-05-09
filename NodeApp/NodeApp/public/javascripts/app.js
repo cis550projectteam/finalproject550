@@ -157,30 +157,30 @@ app.controller('userController', function($scope, $http) {
   // $('#container').highcharts
   var chart = Highcharts.chart('container', {
     title: {
-        text: 'Average Median List Price Per Sq Ft ($)(Past 5 years)',
-        x: -20 
+        text: 'Average Median List Price Per Sq Ft ($)(Past 5 years)',//标题
+        x: -20 //center 设置标题的位置
     },
     subtitle: {
-        text: 'Source: https://www.zillow.com/research/data/', 
-        x: -20 
+        text: 'Source: https://www.zillow.com/research/data/', //副标题
+        x: -20 //副标题位置
     },
-    credits:{
+    credits:{//右下角的文本
         enabled: false,
-        position: {
+        position: {//位置设置
             align: 'right',
             x: -10,
             y: -10
         },
-        href: "http://www.highcharts.com",
+        href: "http://www.highcharts.com",//点击文本时的链接
         style: {
             color:'blue'
         },
-        text: "Highcharts Demo"
+        text: "Highcharts Demo"//显示的内容
     },
-    xAxis: {
+    xAxis: {//横轴的数据
         categories: dataX
     },
-    yAxis: {
+    yAxis: {//纵轴的数据
         title: {
             text: 'Price Per Sq Ft ($/ft^2)'
         },
@@ -189,14 +189,14 @@ app.controller('userController', function($scope, $http) {
             width: 1,
         }]
     },
-    tooltip: {
+    tooltip: {//鼠标移到图形上时显示的提示框
         valueSuffix: '$/ft^2'
     },
     legend: {
         layout: 'vertical',
         align: 'right',
         verticalAlign: 'middle',
-        enabled: false,
+        enabled: false,//去掉右边的 name
         borderWidth: 0
     },
     series: [{

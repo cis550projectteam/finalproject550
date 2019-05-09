@@ -69,8 +69,15 @@ router.post('/login', function(req, res) {
 
   // req.body contains the json data sent from the loginController
   // e.g. to get username, use req.body.username
+const CryptoJS = require('crypto-js');  
 
-  var query = "select * from User where username=" + "'"+ req.body.username + "'" + "and pword=" + "'"+req.body.password + "'"; 
+const key = CryptoJS.enc.Utf8.parse("1234123412ABCDEF"); 
+const iv = CryptoJS.enc.Utf8.parse('ABCDEF1234123412'); 
+let encryptedHexStr = CryptoJS.enc.Hex.parse(req.body.password);
+    let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    let decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+    let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+  var query = "select * from User where username=" + "'"+ req.body.username + "'" + "and pword=" + "'"+decryptedStr.toString() + "'"; 
   //;
   connection.query(query, function(err, rows, fields) {
     console.log("rows", rows);
@@ -101,7 +108,15 @@ router.post('/register', function(req, res) {
 
   // req.body contains the json data sent from the loginController
   // e.g. to get username, use req.body.username
-  
+  const CryptoJS = require('crypto-js');  
+
+const key = CryptoJS.enc.Utf8.parse("1234123412ABCDEF"); 
+const iv = CryptoJS.enc.Utf8.parse('ABCDEF1234123412'); 
+let encryptedHexStr = CryptoJS.enc.Hex.parse(req.body.password);
+    let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    let decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+    let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+    
   var query = "select * from User where username="+"'" + req.body.username + "'"; /* Write your query here and uncomment line 21 in javascripts/app.js*/
   //;
   connection.query(query, function(err, rows, fields) {
@@ -110,7 +125,7 @@ router.post('/register', function(req, res) {
     if (err) console.log('insert error: ', err);
     else {
 	  if (rows.length == 0) {
-		  var query="INSERT INTO User (username,pword,state) VALUES (" + "'" + req.body.username + "'" + " ,"+ "'" + req.body.password +"'" + " ," +"'"+ req.body.state +"')";
+		  var query="INSERT INTO User (username,pword,state) VALUES (" + "'" + req.body.username + "'" + " ,"+ "'" + decryptedStr.toString() +"'" + " ," +"'"+ req.body.state +"')";
 		  connection.query(query, function(err, re, fields) {
 			  console.log("rows");
 			  res.json({
@@ -214,14 +229,14 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
     from\
     (Select p.RegionName as RegionName, p.RecentPrice as RecentPrice, p.avg2014, p.avg2015, p.avg2016, p.avg2017, p.avg2018, population, avgstar, temp2.state, temp2.city\
     from\
-    (Select zip, postal_code, avgstar, population, z.state_name as state, z.city\
+    (Select postal_code, avgstar, population, z.state_name as state, z.city\
     from\
-    zipcode z left outer join\
+    zipcode z join\
     (Select postal_code,avg(stars) as avgstar\
     from service\
     group by postal_code) temp on temp.postal_code = z.zip \
     Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
-    ) temp2 join price p on temp2.zip=p.RegionName\
+    ) temp2 join price p on temp2.postal_code=p.RegionName\
     ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
     Order by RecentPrice DESC\
     "
@@ -236,14 +251,14 @@ router.get('/userPreference/:state/:city/:bor', function(req, res) {
   from\
   (Select r.RegionName as RegionName, r.RecentPrice as RecentPrice, r.avg2014, r.avg2015, r.avg2016, r.avg2017, r.avg2018, population, avgstar, temp2.state, temp2.city\
   from\
-  (Select zip, postal_code, avgstar, population, z.state_name as state, z.city\
+  (Select postal_code, avgstar, population, z.state_name as state, z.city\
   from\
-  zipcode z left outer join\
+  zipcode z join\
   (Select postal_code,avg(stars) as avgstar\
   from service\
   group by postal_code) temp on temp.postal_code = z.zip \
   Where city = '" + cityInput + "' and state_name = '"+ stateInput +"'\
-  ) temp2 join rent r on temp2.zip=r.RegionName\
+  ) temp2 join rent r on temp2.postal_code=r.RegionName\
   ) temp3 join PTR on temp3.RegionName=PTR.RegionName\
   Order by RecentPrice DESC\
   "
@@ -319,17 +334,6 @@ router.get('/visState/:state', function(req, res) {
 
 
 
-// Q6 --> external API
-router.get('/queryPosters', function(req, res) {
-  var query = "select imdb_id from Movies order by RAND() LIMIT 14"
-  // console.log("here comes the question 6 router query", query)
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      res.json(rows);
-    }
-  });
-});
 
 // template for GET requests
 /*

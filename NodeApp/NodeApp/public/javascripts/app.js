@@ -4,13 +4,16 @@ app.controller('loginController', function($scope, $http) {
   $scope.verifyLogin = function() {
     // To check in the console if the variables are correctly storing the input:
     // console.log($scope.username, $scope.password);
-
+    const key = CryptoJS.enc.Utf8.parse("1234123412ABCDEF"); 
+    const iv = CryptoJS.enc.Utf8.parse('ABCDEF1234123412'); 
+	let srcs = CryptoJS.enc.Utf8.parse($scope.password);
+    let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
     var request = $http({
       url: '/login',
       method: "POST",
       data: {
         'username': $scope.username,
-        'password': $scope.password
+        'password': encrypted.ciphertext.toString().toUpperCase(),
       }
     })
     
@@ -41,13 +44,16 @@ app.controller('registerController', function($scope, $http) {
   $scope.verifyRegister = function() {
     // To check in the console if the variables are correctly storing the input:
     // console.log($scope.username, $scope.password);
-
+	const key = CryptoJS.enc.Utf8.parse("1234123412ABCDEF"); 
+    const iv = CryptoJS.enc.Utf8.parse('ABCDEF1234123412'); 
+	let srcs = CryptoJS.enc.Utf8.parse($scope.password);
+    let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
     var request = $http({
       url: '/register',
       method: "POST",
       data: {
         'username': $scope.username,
-        'password': $scope.password,
+        'password': encrypted.ciphertext.toString().toUpperCase(),
 		    'state':  $scope.state
       }
     })
@@ -151,30 +157,30 @@ app.controller('userController', function($scope, $http) {
   // $('#container').highcharts
   var chart = Highcharts.chart('container', {
     title: {
-        text: 'Average Median List Price Per Sq Ft ($)(Past 5 years)',//标题
-        x: -20 //center 设置标题的位置
+        text: 'Average Median List Price Per Sq Ft ($)(Past 5 years)',
+        x: -20 
     },
     subtitle: {
-        text: 'Source: https://www.zillow.com/research/data/', //副标题
-        x: -20 //副标题位置
+        text: 'Source: https://www.zillow.com/research/data/', 
+        x: -20 
     },
-    credits:{//右下角的文本
+    credits:{
         enabled: false,
-        position: {//位置设置
+        position: {
             align: 'right',
             x: -10,
             y: -10
         },
-        href: "http://www.highcharts.com",//点击文本时的链接
+        href: "http://www.highcharts.com",
         style: {
             color:'blue'
         },
-        text: "Highcharts Demo"//显示的内容
+        text: "Highcharts Demo"
     },
-    xAxis: {//横轴的数据
+    xAxis: {
         categories: dataX
     },
-    yAxis: {//纵轴的数据
+    yAxis: {
         title: {
             text: 'Price Per Sq Ft ($/ft^2)'
         },
@@ -183,14 +189,14 @@ app.controller('userController', function($scope, $http) {
             width: 1,
         }]
     },
-    tooltip: {//鼠标移到图形上时显示的提示框
+    tooltip: {
         valueSuffix: '$/ft^2'
     },
     legend: {
         layout: 'vertical',
         align: 'right',
         verticalAlign: 'middle',
-        enabled: false,//去掉右边的 name
+        enabled: false,
         borderWidth: 0
     },
     series: [{
